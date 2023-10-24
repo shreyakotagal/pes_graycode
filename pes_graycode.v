@@ -1,4 +1,4 @@
-module iiitb_gc
+module pes_graycode
 (
 	input clk, enable, reset,
 	output reg [7:0] gray_count
