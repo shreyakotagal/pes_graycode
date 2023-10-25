@@ -1,8 +1,9 @@
-# pes_graycodecount
-## Introduction
+# pes_graycode
+## GRAY CODE COUNTER
+### Introduction
 Gray code counter is a digital counter that counts such that each successive bit patterns differs by only one bit. Unlike normal counters, there are no glitches in the count pattern (0 -> 1 -> 3 -> 2 -> 6 -> 7 ......... ). Since switching is less in gray code counters (i.e., exactly one-bit switches in one clock cycle), the power consumption of the gray code counter is significantly less compared to the normal counter. Gray code counters, renowned for their unique counting sequence, find extensive use in applications where precise and reliable transitions are imperative, making them an ideal choice for tasks ranging from error detection to robotic navigation.
 
-## Applications of Gray counter 
+### Applications of Gray counter 
 
 * Rotary Encoders: Gray code counters are commonly used in rotary encoders to accurately track position changes, providing glitch-free and precise position readings.
 * Digital-to-Analog Converters (DACs): Gray code counters are employed in DACs to generate smooth and glitch-free analog output voltages, ensuring high-quality signal generation.
@@ -10,11 +11,11 @@ Gray code counter is a digital counter that counts such that each successive bit
 * Error Detection: Gray code sequences are utilized for error detection in communication systems, making them valuable for maintaining data integrity in critical applications.
 * Maze Solving Algorithms: Gray code sequences are used in maze-solving algorithms for systematic navigation through complex mazes, facilitating efficient path planning and exploration.
 
-## History about Gray Counters
+### History about Gray Counters
 
 Gray code counters are named after Frank Gray, an American physicist, and engineer who is credited with inventing Gray codes. Frank Gray developed the Gray code as a binary numeral system that avoids the problems of glitches during counting. Gray codes are named in his honor, and as a result, any counters or systems that use this code for counting are referred to as Gray code counters. Frank Gray's work in this area significantly contributed to the field of digital electronics and error-resistant counting systems
 
-## Simulation 
+### Simulation 
 
 Tools require for simulation:
 - **iverilog**
@@ -36,7 +37,7 @@ iverilog pes_graycode.v pes_graycode_tb.v
 gtkwave pes_graycode.vcd
 ```
 
-## Synthesis 
+### Synthesis 
 
 Tools required for synthesis:
 - **yosys**
@@ -61,17 +62,29 @@ make test
 Create a scirpt yosys_run.sh with the following lines
 ```
 read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
-read_verilog iiitb_gc.v
-synth -top iiitb_gc	
+read_verilog pes_graycode.v
+synth -top pes_graycode	
 dfflibmap -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 abc -liberty lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 clean
 flatten
-write_verilog -noattr iiitb_gc_synth.v
+write_verilog -noattr pes_graycode_synth.v
 stat
 show
 ```
 In the design file folder, run terminal and run the following command 
 `` yosys -s yosys_run.sh ``
 
-## Gate Level Simulation (GLS)
+### Gate Level Simulation (GLS)
+
+When we write the RTL code, we test it by giving it some stimulus through the testbench and check it for the desired specifications. 
+Similarly, we run the netlist as the design under test (dut) with the same testbench. 
+Gate level simulation is done to verify the logical correctness of the design after synthesis.
+
+```
+iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 pes_graycode_synth.v pes_graycode_tb.v verilog_model/primitives.v verilog_model/sky130_fd_sc_hd.v
+./a.out
+gtkwave pes_graycode.vcd
+```
+
+At the first positive edge of the clock, the counter resets to 0x00. From the second clock onwards, the counter starts to count in gray code sequence.
