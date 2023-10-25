@@ -36,6 +36,9 @@ iverilog pes_graycode.v pes_graycode_tb.v
 ./a.out
 gtkwave pes_graycode.vcd
 ```
+![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/6c78db68-c589-4398-b79e-678f22c1b67c)
+
+![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/0624c831-7560-4952-bf03-5e39db7c1a82)
 
 ### Synthesis 
 
@@ -59,6 +62,7 @@ sudo make install
 make test
 ```
 **Running synthesis**
+
 Create a scirpt yosys_run.sh with the following lines
 ```
 read_liberty -lib lib/sky130_fd_sc_hd__tt_025C_1v80.lib
@@ -73,7 +77,12 @@ stat
 show
 ```
 In the design file folder, run terminal and run the following command 
+
 `` yosys -s yosys_run.sh ``
+
+![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/04e6aabb-38cd-463f-aa0e-a7a27cb66719)
+
+![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/4b93087e-c07b-44dd-89cb-4d27d651ee0b)
 
 ### Gate Level Simulation (GLS)
 
@@ -82,9 +91,13 @@ Similarly, we run the netlist as the design under test (dut) with the same testb
 Gate level simulation is done to verify the logical correctness of the design after synthesis.
 
 ```
-iverilog -DFUNCTIONAL -DUNIT_DELAY=#1 pes_graycode_synth.v pes_graycode_tb.v verilog_model/primitives.v verilog_model/sky130_fd_sc_hd.v
+iverilog pes_graycode.v pes_graycode_tb.v primitives.v sky130_fd_sc_hd.v
 ./a.out
 gtkwave pes_graycode.vcd
 ```
+
+![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/53fe2d60-07e9-404b-86af-e47d155aa7a8)
+
+![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/7b2851f8-4da9-4e18-871a-0efb819822b4)
 
 At the first positive edge of the clock, the counter resets to 0x00. From the second clock onwards, the counter starts to count in gray code sequence.
