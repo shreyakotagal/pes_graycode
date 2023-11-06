@@ -207,7 +207,7 @@ To start OpenLane and prepare the design, use the following commands
 cd OpenLane
 make mount
 ./flow.tcl -interactive
-prep -design iiitb_gc
+prep -design pes_gray
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
 add_lefs -src $lefs
 ```
@@ -242,7 +242,7 @@ run_placement
 ```
 The placement can be viewed by typing the following command.
 ```
-magic -T /home/tejasbn/Desktop/OpenLane/pdks/volare/sky130/versions/44a43c23c81b45b8e774ae7a84899a5a778b6b0b/sky130
+magic -T /home/shreya/Desktop/OpenLane/pdks/volare/sky130/versions/44a43c23c81b45b8e774ae7a84899a5a778b6b0b/sky130
 ```
 ![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/0e5b2921-12e5-4efc-abef-78b5eb307fc3)
 ![image](https://github.com/shreyakotagal/pes_graycode/assets/117657204/46870ac9-d387-4efc-ac66-3f67cc08758e)
